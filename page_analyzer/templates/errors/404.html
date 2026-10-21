@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% with title = "Страница не найдена" %}{% include 'components/page_title.html' %}{% endwith %}
+<p>Здесь нет того, что вы ищете.</p>
+<p class="mt-2"><a class="text-blue-600 hover:underline" href="{{ url_for('index') }}">Вернуться на главную</a></p>
+{% endblock %}

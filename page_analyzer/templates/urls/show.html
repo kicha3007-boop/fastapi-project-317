@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% with title = "Сайт: " ~ url.name %}{% include 'components/page_title.html' %}{% endwith %}
+<div class="overflow-x-auto">
+  <table class="w-full border border-gray-300 text-left whitespace-nowrap" data-test="url">
+    <tbody>
+      <tr class="hover:bg-gray-50">
+        <td class="border border-gray-300 px-3 py-2">ID</td>
+        <td class="border border-gray-300 px-3 py-2">{{ url.id }}</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="border border-gray-300 px-3 py-2">Имя</td>
+        <td class="border border-gray-300 px-3 py-2">{{ url.name }}</td>
+      </tr>
+      <tr class="hover:bg-gray-50">
+        <td class="border border-gray-300 px-3 py-2">Дата создания</td>
+        <td class="border border-gray-300 px-3 py-2">{{ url.created_at.date() }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="mt-10 mb-3 text-2xl font-semibold">Проверки</h2>
+<form method="post" action="{{ url_for('url_checks_create', id=url.id) }}">
+  <input type="submit" class="cursor-pointer rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700" value="Запустить проверку">
+</form>
+
+<div class="overflow-x-auto">
+  <table class="mt-4 w-full border border-gray-300 text-left" data-test="checks">
+    <thead>
+      <tr>
+        <th class="border border-gray-300 px-3 py-2">ID</th>
+        <th class="border border-gray-300 px-3 py-2">Код ответа</th>
+        <th class="border border-gray-300 px-3 py-2">h1</th>
+        <th class="border border-gray-300 px-3 py-2">title</th>
+        <th class="border border-gray-300 px-3 py-2">description</th>
+        <th class="border border-gray-300 px-3 py-2">Дата создания</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for check in url.checks %}
+        <tr class="hover:bg-gray-50">
+          <td class="border border-gray-300 px-3 py-2">{{ check.id }}</td>
+          <td class="border border-gray-300 px-3 py-2">{{ check.status_code }}</td>
+          <td class="border border-gray-300 px-3 py-2">{{ check.h1 | truncate(200) }}</td>
+          <td class="border border-gray-300 px-3 py-2">{{ check.title | truncate(200) }}</td>
+          <td class="border border-gray-300 px-3 py-2">{{ check.description | truncate(200) }}</td>
+          <td class="border border-gray-300 px-3 py-2">{{ check.created_at.date() }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

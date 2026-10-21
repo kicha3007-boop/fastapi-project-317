@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% with title = "Сайты" %}{% include 'components/page_title.html' %}{% endwith %}
+<div class="overflow-x-auto">
+  <table class="w-full border border-gray-300 text-left whitespace-nowrap" data-test="urls">
+    <thead>
+      <tr>
+        <th class="border border-gray-300 px-3 py-2">ID</th>
+        <th class="border border-gray-300 px-3 py-2">Имя</th>
+        <th class="border border-gray-300 px-3 py-2">Последняя проверка</th>
+        <th class="border border-gray-300 px-3 py-2">Код ответа</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for site, last_check in urls %}
+        <tr class="hover:bg-gray-50">
+          <td class="border border-gray-300 px-3 py-2">{{ site.id }}</td>
+          <td class="border border-gray-300 px-3 py-2">
+            <a class="text-blue-600 hover:underline" href="{{ url_for('url_show', id=site.id) }}">{{ site.name }}</a>
+          </td>
+          <td class="border border-gray-300 px-3 py-2">
+            {%- if last_check %}{{ last_check.created_at.date() }}{% endif -%}
+          </td>
+          <td class="border border-gray-300 px-3 py-2">
+            {%- if last_check %}{{ last_check.status_code }}{% endif -%}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

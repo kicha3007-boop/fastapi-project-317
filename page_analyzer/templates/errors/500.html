@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% with title = "Внутренняя ошибка сервера" %}{% include 'components/page_title.html' %}{% endwith %}
+<p>Что-то пошло не так. Попробуйте позже.</p>
+<p class="mt-2"><a class="text-blue-600 hover:underline" href="{{ url_for('index') }}">Вернуться на главную</a></p>
+{% endblock %}

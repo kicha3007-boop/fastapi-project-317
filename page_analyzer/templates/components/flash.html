@@ -1,0 +1,7 @@
+{% for message in flash_messages %}
+  <div class="mx-auto mt-4 w-full max-w-5xl rounded border px-4 py-3
+              {% if message.category == 'danger' %}border-red-300 bg-red-50 text-red-900
+              {% elif message.category == 'success' %}border-green-300 bg-green-50 text-green-900
+              {% else %}border-blue-300 bg-blue-50 text-blue-900{% endif %}"
+       role="alert">{{ message.text }}</div>
+{% endfor %}

@@ -1,0 +1,5 @@
+<form action="{{ url_for('urls_create') }}" method="post" class="flex justify-center gap-3">
+  <label for="url" class="sr-only">Url для проверки</label>
+  <input type="text" id="url" name="url" placeholder="https://www.example.com" value="{{ url_name }}" class="w-full rounded text-lg" required>
+  <input type="submit" class="cursor-pointer rounded bg-blue-600 px-8 py-2 text-lg font-medium text-white uppercase hover:bg-blue-700" value="Проверить">
+</form>

@@ -1,28 +1,58 @@
 # Анализатор страниц на FastAPI
 
 [![hexlet-check](https://github.com/kicha3007-boop/fastapi-project-317/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/kicha3007-boop/fastapi-project-317/actions)
+[![Python CI](https://github.com/kicha3007-boop/fastapi-project-317/actions/workflows/pyci.yml/badge.svg)](https://github.com/kicha3007-boop/fastapi-project-317/actions/workflows/pyci.yml)
 
-Создадите полноценное веб-приложение, которое выполняет запросы по сети и сохраняет данные в базу. Настроите CI и выполните деплой.
+Page Analyzer — сайт, который проверяет страницы на SEO-пригодность: пользователь добавляет адрес,
+запускает проверку и видит код ответа, `h1`, `title` и `description` страницы.
 
 Учебный проект Хекслета: https://ru.hexlet.io/programs/fastapi
 Как это должно работать: https://files.hexlet.app/a/vfyo3a
 
+Деплой на render.com пока не выполнен — ссылка на приложение появится здесь.
+
 ## Стек
 
-- Python
+Python 3.14, FastAPI, SQLModel (асинхронная сессия, asyncpg), Alembic, PostgreSQL, Jinja2,
+httpx, BeautifulSoup, Tailwind CSS, uv, ruff, pytest.
 
-## Установка
+## Требования
 
-<!-- Опишите установку: клонирование, зависимости, переменные окружения -->
+- Python 3.14 и [uv](https://docs.astral.sh/uv/)
+- Node.js и npm — только для сборки стилей
+- PostgreSQL
+
+## Установка и запуск
 
 ```bash
 git clone https://github.com/kicha3007-boop/fastapi-project-317.git
 cd fastapi-project-317
+cp .env.example .env     # заполнить DATABASE_URL и SECRET_KEY
+make setup               # uv sync, npm ci, сборка CSS, миграции (uv run alembic upgrade head)
+make dev                 # uv run fastapi dev — режим разработки с перезапуском, http://localhost:8000
+make start               # uv run fastapi run --workers 4 — без слежения за файлами
 ```
 
-## Использование
+Переменные окружения:
 
-<!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
+- `DATABASE_URL` — строка подключения, например `postgres://user:password@localhost:5432/page_analyzer`
+  (драйвер `asyncpg` подставляется автоматически)
+- `SECRET_KEY` — ключ подписи сессии для flash-сообщений
+
+## Разработка
+
+```bash
+uv run ruff check .      # make lint
+uv run pytest -vv        # make test
+make check               # линтер и тесты
+make migrate             # накатить миграции
+make build-css           # пересобрать стили после правки шаблонов
+```
+
+Новая миграция по изменённым моделям: `uv run alembic revision --autogenerate -m "описание"`.
+
+Деплой на render.com: команда сборки `make build` (скрипт `build.sh`), запуска — `make render-start`,
+переменные `DATABASE_URL` и `SECRET_KEY`.
 
 ---
 

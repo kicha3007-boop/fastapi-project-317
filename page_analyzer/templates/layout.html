@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Анализатор страниц: проверка сайтов на SEO-пригодность">
+    <link href="{{ url_for('static', path='css/main.css') }}" rel="stylesheet">
+    <title>Анализатор страниц</title>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <header class="shrink-0">
+      {% include 'components/navbar.html' %}
+    </header>
+    {% include 'components/flash.html' %}
+    <main class="grow">
+      <div class="mx-auto mt-3 w-full max-w-5xl px-4">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+    {% include 'components/footer.html' %}
+  </body>
+</html>
